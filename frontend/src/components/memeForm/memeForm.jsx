@@ -1,13 +1,12 @@
 import { Button, Form , Message} from "semantic-ui-react";
 import { React, useState } from "react";
 
-const submitMeme = () => {};
+// const submitMeme = () => {};
 
-const MemeForm = () => {
+const MemeForm = (props) => {
   const [memeOwner, setMemeOwner] = useState("");
   const [caption, setMemeCaption] = useState("");
   const [memeUrl, setmemeUrl] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const setValue = (event) => {
     switch (event.target.name) {
@@ -36,27 +35,7 @@ const MemeForm = () => {
   }
   const submitMeme = () => {
     let postData = {owner:memeOwner, url:memeUrl,caption:caption}
-    debugger;
-    console.log(postData);
-    setLoading(true);
-    const memes = fetch(encodeURI(`http://localhost:8080/memes`),{method:'post', headers:{'Content-Type': 'application/json'} ,body:JSON.stringify(postData)})
-    .then((res)=>{
-        return res.json();
-    })
-    .then((resJSON)=>{
-      setLoading(false);
-        console.log(resJSON);
-       let valResult =  checkValidation(false,resJSON)
-       if(valResult){
-        clearValues()
-        return resJSON
-       }
-      
-    })
-    .catch((err)=>{
-      setLoading(false);
-      console.log(`Error occured during fetch api`)
-    })
+    props.submitMeme(postData);
   };
   return (
     <Form>

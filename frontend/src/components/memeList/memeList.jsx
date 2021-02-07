@@ -20,7 +20,7 @@ const MemeList = ()=>{
         .catch((err)=>{
             console.log(`Error occured during fetch ${err}`);
         })
-    }, [])
+    })
 
     return(
         <Grid>
