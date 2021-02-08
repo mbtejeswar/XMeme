@@ -8,7 +8,8 @@ import {Container}  from 'semantic-ui-react';
 class Main extends React.Component{
 
     state={
-       loading:false
+       loading:false,
+       firstHundredMemes:null
     }
 
     checkValidation = (error, response)=>{
@@ -16,19 +17,45 @@ class Main extends React.Component{
           return true
         }
       }
-    
-    submitMeme = (postData)=>{
+    componentDidMount(){
+        debugger;
+        this.fetchFirstHundredMemes();
+
+     
+
+    }
+
+     fetchFirstHundredMemes = ()=>{
+        fetch(encodeURI(`http://localhost:8080/memes`))
+        .then((res)=>{
+          return res.json()
+        })
+        .then((response)=>{
+            this.setState({firstHundredMemes:response});
+        })
+        .catch((err)=>{
+            console.log(`Error occured during fetch ${err}`);
+        })
+
+    }
+
+    // componentDidUpdate(){
+    //     this.fetchFirstHundredMemes();
+    // }
+    submitMeme = async (postData)=>{
+        debugger;
         this.setState({loading:true});
         debugger;
-        const memes = fetch(encodeURI(`http://localhost:8080/memes`),{method:'post', headers:{'Content-Type': 'application/json'} ,body:JSON.stringify(postData)})
+        const memes = await fetch(encodeURI(`http://localhost:8080/memes`),{method:'post', headers:{'Content-Type': 'application/json'} ,body:JSON.stringify(postData)})
         .then((res)=>{
             return res.json();
         })
         .then((resJSON)=>{
-            this.setState({loading:false});
+            
            let valResult =  this.checkValidation(false,resJSON)
            if(valResult){
             // clearValues()
+          
             return resJSON
            }
           
@@ -37,14 +64,18 @@ class Main extends React.Component{
             this.setState({loading:false});
           console.log(`Error occured during fetch api`)
         })
+        this.fetchFirstHundredMemes();
     }
+
+
   
         render(){
 
             return(
                 <div>
                     <MemeForm submitMeme = {this.submitMeme} />
-                    <MemeList />
+                    {this.state.firstHundredMemes ?  <MemeList firstHundredMemes={this.state.firstHundredMemes}/> :''}
+                   
                 </div>
             )
 

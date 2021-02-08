@@ -39,6 +39,26 @@ app.get('/memes', (req,res)=>{
 
 
 })
+
+app.get('/memes/:id', (req,res)=>{
+    try {
+        memesSchema.findById((req.params.id), (err,db_res)=>{
+            if(err){
+                console.log(err);
+            } else{
+                return res.status(200).json({
+                    id:db_res.id,
+                    name:db_res.owner,
+                    url:db_res.url,
+                    caption:db_res.caption
+                })
+            }
+
+        })
+    } catch (error) {
+        
+    }
+})
 app.post('/memes', (req,res)=>{
 
     try {
