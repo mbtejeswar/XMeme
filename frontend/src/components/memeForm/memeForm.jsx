@@ -34,7 +34,7 @@ const MemeForm = (props) => {
     setmemeUrl('')
   }
   const submitMeme = () => {
-    let postData = {owner:memeOwner, url:memeUrl,caption:caption}
+    let postData = {name:memeOwner, url:memeUrl,caption:caption}
     props.submitMeme(postData);
   };
   return (
