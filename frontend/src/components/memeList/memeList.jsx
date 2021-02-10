@@ -11,7 +11,7 @@ const MemeList = (props)=>{
 
 
     return(
-       
+        
         <Grid>
        { firstHundredMemes.length > 0 ? firstHundredMemes.map((meme)=>(
        <MemeCard image={meme.url} name={meme.owner} caption={meme.caption} />
