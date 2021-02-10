@@ -5,7 +5,7 @@ import MemeCard from '../memeCard/memeCard';
 
 
 const MemeList = (props)=>{
-    debugger;
+
     const {firstHundredMemes} = props;
 
 

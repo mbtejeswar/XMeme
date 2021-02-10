@@ -3,6 +3,8 @@ import MemeCard from '../memeCard/memeCard';
 import MemeList from '../memeList/memeList';
 import MemeForm from '../memeForm/memeForm';
 import {Container}  from 'semantic-ui-react';
+import classes from './styles.module.css';
+import Navbar from '../common/navbar/navbar';
 
 
 class Main extends React.Component{
@@ -18,7 +20,6 @@ class Main extends React.Component{
         }
       }
     componentDidMount(){
-        debugger;
         this.fetchFirstHundredMemes();
 
      
@@ -43,9 +44,9 @@ class Main extends React.Component{
     //     this.fetchFirstHundredMemes();
     // }
     submitMeme = async (postData)=>{
-        debugger;
+     
         this.setState({loading:true});
-        debugger;
+
         const memes = await fetch(encodeURI(`http://localhost:8080/memes`),{method:'post', headers:{'Content-Type': 'application/json'} ,body:JSON.stringify(postData)})
         .then((res)=>{
             return res.json();
@@ -72,10 +73,14 @@ class Main extends React.Component{
         render(){
 
             return(
-                <div>
+                <div className={classes['mainContainer']}>
+                    <Navbar items={['Login', 'Register']} />
+                    <div className={classes.container}>
                     <MemeForm submitMeme = {this.submitMeme} />
+                    <div className={classes.memeListContainer}>
                     {this.state.firstHundredMemes ?  <MemeList firstHundredMemes={this.state.firstHundredMemes}/> :''}
-                   
+                    </div>
+                   </div>
                 </div>
             )
 

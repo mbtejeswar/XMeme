@@ -1,5 +1,6 @@
 import { Button, Form , Message} from "semantic-ui-react";
 import { React, useState } from "react";
+import classes from './styles.module.css';
 
 // const submitMeme = () => {};
 
@@ -36,9 +37,10 @@ const MemeForm = (props) => {
   const submitMeme = () => {
     let postData = {name:memeOwner, url:memeUrl,caption:caption}
     props.submitMeme(postData);
+    clearValues();
   };
   return (
-    <Form>
+    <Form className={classes['form']}>
   
       <Form.Field>
         <label>Meme Owner</label>
