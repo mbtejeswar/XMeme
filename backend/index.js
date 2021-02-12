@@ -4,6 +4,8 @@ const cors = require("cors");
 var bodyParser = require("body-parser");
 var urlencodedParser = bodyParser.urlencoded({ extended: true });
 var jsonParser = bodyParser.json();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 const app = express();
 app.use(urlencodedParser);
@@ -13,12 +15,15 @@ app.use(jsonParser);
  * Connect to mongoose DB
  */
 mongoose.connect("mongodb://localhost/XMeme", { useNewUrlParser: true });
+//  mongoose.connect("mongodb+srv://tejeswar:vcIwKZsxKH2U5bqK@cluster0.ejwpu.mongodb.net/XMeme?retryWrites=true&w=majority", { useNewUrlParser: true });
+
 // Enables CORS on those routes according config above
 // ToDo configure CORS for set of our trusted domains
 app.use(cors());
 app.options("*", cors());
 
 const memesSchema = require('./models/memes');
+
 
 
 /**
@@ -189,7 +194,9 @@ app.patch('/memes/:id', (req, res)=>{
 
 })
 
-app.listen(8081, () => {
+app.use('/swagger-ui', swaggerUi.serve,swaggerUi.setup(swaggerDocument));
+
+app.listen(process.env.PORT ||8081, () => {
     console.log("Live server has started");
   });
   

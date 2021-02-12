@@ -27,7 +27,7 @@ class Main extends React.Component{
     }
 
      fetchFirstHundredMemes = ()=>{
-        fetch(encodeURI(`http://localhost:8080/memes`))
+        fetch(encodeURI(`http://localhost:8081/memes`))
         .then((res)=>{
           return res.json()
         })
@@ -47,7 +47,7 @@ class Main extends React.Component{
      
         this.setState({loading:true});
 
-        const memes = await fetch(encodeURI(`http://localhost:8080/memes`),{method:'post', headers:{'Content-Type': 'application/json'} ,body:JSON.stringify(postData)})
+        const memes = await fetch(encodeURI(`http://localhost:8081/memes`),{method:'post', headers:{'Content-Type': 'application/json'} ,body:JSON.stringify(postData)})
         .then((res)=>{
             return res.json();
         })
