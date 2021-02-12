@@ -1,10 +1,18 @@
 import { Button, Form , Message} from "semantic-ui-react";
 import { React, useState } from "react";
 import classes from './styles.module.css';
+import {message} from 'antd'
 
-// const submitMeme = () => {};
+
 
 const MemeForm = (props) => {
+  /**
+   * @property {string} memeOwner
+   * stores the value of memeOwner on change in input box
+   * @property {string} caption
+   * caption is stored in caption variable onchange
+   * @property {string} memeUrl 
+   */
   const [memeOwner, setMemeOwner] = useState("");
   const [caption, setMemeCaption] = useState("");
   const [memeUrl, setmemeUrl] = useState("");
@@ -23,20 +31,49 @@ const MemeForm = (props) => {
     }
   };
 
+  /**
+   * 
+   * @param {boolean} error 
+   * boolean value to store the error flag of API call 
+   * @param {object} response 
+   * Input response to check validation
+   */
   const checkValidation = (error, response)=>{
     if(!error){
       return true
     }
   }
 
+  /**
+   * Clear all the input values on submit
+   */
+
   const clearValues = ()=>{
     setMemeOwner('')
     setMemeCaption('')
     setmemeUrl('')
   }
+
+  const formValidation =()=>{
+    if(memeOwner!=="" && memeUrl!="" && caption!=""){
+      return true 
+    } else {
+      message.error('All fields are mandatory. Please check again and submit')
+    
+      return false
+    };
+  }
+  /**
+   * Submit the meme on Submit button to backend
+   */
   const submitMeme = () => {
+    let validation = formValidation();
+    
     let postData = {name:memeOwner, url:memeUrl,caption:caption}
-    props.submitMeme(postData);
+    if(validation){
+      props.submitMeme(postData);
+    }
+    
     clearValues();
   };
   return (

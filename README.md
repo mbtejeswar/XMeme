@@ -22,4 +22,3 @@
     XMeme Page- http://localhost:3000/
 
 ### Backend End Points 
-

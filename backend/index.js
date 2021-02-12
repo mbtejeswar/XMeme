@@ -15,7 +15,7 @@ app.use(jsonParser);
  * Connect to mongoose DB
  */
 mongoose.connect("mongodb://localhost/XMeme", { useNewUrlParser: true });
-//  mongoose.connect("mongodb+srv://tejeswar:vcIwKZsxKH2U5bqK@cluster0.ejwpu.mongodb.net/XMeme?retryWrites=true&w=majority", { useNewUrlParser: true });
+    
 
 // Enables CORS on those routes according config above
 // ToDo configure CORS for set of our trusted domains
@@ -70,7 +70,9 @@ app.get('/memes/:id', (req,res)=>{
     try {
         memesSchema.findById((req.params.id), (err,db_res)=>{
             if(err){
-                console.log(err);
+                return res.status(400).json({
+                    success:false
+                }) 
             } else{
                 return res.status(200).json({
                     id:db_res.id,
@@ -82,7 +84,9 @@ app.get('/memes/:id', (req,res)=>{
 
         })
     } catch (error) {
-        
+        return res.status(400).json({
+            success:false
+        }) 
     }
 })
 /**
