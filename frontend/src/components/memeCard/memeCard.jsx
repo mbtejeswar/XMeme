@@ -7,11 +7,15 @@ const memeCard = (props) => {
     <div className={classes["memeCard"]}>
       <Card>
         <Card.Content>
+
           <div>
             <Icon name="user outline" />{" "}
             <Card.Header className={classes.header}>
               {props.name.charAt(0).toUpperCase() + props.name.slice(1)}
             </Card.Header>
+          <div className={classes.editIcon}>
+          <Icon name='edit outline' />   
+          </div>
           </div>
 
           <Card.Meta>
